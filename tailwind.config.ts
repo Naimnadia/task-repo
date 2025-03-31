@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,6 +62,12 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				task: {
+					urgent_important: '#ea384c',
+					urgent_not_important: '#D3E4FD',
+					not_urgent_important: '#FEF7CD',
+					not_urgent_not_important: '#F2FCE2',
 				}
 			},
 			borderRadius: {
@@ -84,11 +91,44 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'bounce': {
+					'0%, 100%': {
+						transform: 'translateY(0)'
+					},
+					'50%': {
+						transform: 'translateY(-10px)'
+					}
+				},
+				'escape': {
+					'0%': {
+						transform: 'translateY(0)'
+					},
+					'100%': {
+						transform: 'translateY(-500px) scale(0)'
+					}
+				},
+				'shake': {
+					'0%, 100%': {
+						transform: 'translateX(0)'
+					},
+					'10%, 30%, 50%, 70%, 90%': {
+						transform: 'translateX(-4px)'
+					},
+					'20%, 40%, 60%, 80%': {
+						transform: 'translateX(4px)'
+					}
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'bounce': 'bounce 1s ease-in-out infinite',
+				'escape': 'escape 1s forwards',
+				'shake': 'shake 0.5s ease-in-out'
+			},
+			backgroundImage: {
+				'prison-wall': "url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgdmlld0JveD0iMCAwIDQwIDQwIj48cmVjdCB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIGZpbGw9IiM0YjUwNjMiLz48cmVjdCB4PSI0MCIgd2lkdGg9IjMiIGhlaWdodD0iNDAiIGZpbGw9IiMzNTM4NDUiLz48cmVjdCB5PSI0MCIgd2lkdGg9IjQwIiBoZWlnaHQ9IjMiIGZpbGw9IiMzNTM4NDUiLz48L3N2Zz4=')"
 			}
 		}
 	},
