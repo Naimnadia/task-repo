@@ -6,6 +6,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Di
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/use-toast';
 import { Trophy, Check } from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 // Import confetti separately
 let confetti: any;
@@ -21,6 +22,7 @@ const PrisonerBall: React.FC<PrisonerBallProps> = ({ task }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isEscaping, setIsEscaping] = useState(false);
   const { completeTask } = useTaskContext();
+  const isMobile = useIsMobile();
   
   const getBallColor = () => {
     switch(task.category) {
@@ -48,8 +50,14 @@ const PrisonerBall: React.FC<PrisonerBallProps> = ({ task }) => {
   const hash = task.id.split('-')[0] || '';
   const hashSum = [...hash].reduce((sum, char) => sum + char.charCodeAt(0), 0);
   
-  const randomX = 20 + (hashSum % 60); // Between 20% and 80%
-  const randomY = 20 + ((hashSum * 7) % 60); // Between 20% and 80%
+  // Adjust positioning ranges based on mobile or desktop
+  const randomX = isMobile 
+    ? 10 + (hashSum % 80) // Between 10% and 90% on mobile (wider range)
+    : 20 + (hashSum % 60); // Between 20% and 80% on desktop
+  
+  const randomY = isMobile
+    ? 15 + ((hashSum * 7) % 70) // Between 15% and 85% on mobile (wider vertical range)
+    : 20 + ((hashSum * 7) % 60); // Between 20% and 80% on desktop
   
   const handleComplete = () => {
     setIsEscaping(true);
@@ -58,8 +66,8 @@ const PrisonerBall: React.FC<PrisonerBallProps> = ({ task }) => {
     // Trigger confetti with more colorful options
     if (confetti) {
       confetti({
-        particleCount: 200,
-        spread: 100,
+        particleCount: isMobile ? 100 : 200,
+        spread: 80,
         origin: { y: 0.6 },
         colors: ['#F54748', '#38B000', '#FFBE0B', '#8338EC', '#5D9CEC'],
         shapes: ['star', 'square', 'circle'],
@@ -78,10 +86,14 @@ const PrisonerBall: React.FC<PrisonerBallProps> = ({ task }) => {
     }, 1000);
   };
   
+  // Size of ball based on device
+  const ballSize = isMobile ? 'w-12 h-12' : 'w-16 h-16';
+  const textSize = isMobile ? 'text-2xl' : 'text-3xl';
+  
   return (
     <>
       <div
-        className={`prison-ball bg-gradient-to-b ${getBallColor()} rounded-full w-16 h-16 flex items-center justify-center text-3xl border-2 ${getBallBorder()} shadow-lg cursor-pointer`}
+        className={`prison-ball bg-gradient-to-b ${getBallColor()} rounded-full ${ballSize} flex items-center justify-center ${textSize} border-2 ${getBallBorder()} shadow-lg cursor-pointer`}
         style={{
           position: 'absolute',
           left: `${randomX}%`,
@@ -96,24 +108,24 @@ const PrisonerBall: React.FC<PrisonerBallProps> = ({ task }) => {
       </div>
       
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className="bg-card/95 backdrop-blur-md border-2 border-white/20 shadow-xl rounded-xl">
+        <DialogContent className="bg-card/95 backdrop-blur-md border-2 border-white/20 shadow-xl rounded-xl max-w-[90vw] sm:max-w-md">
           <DialogHeader>
-            <DialogTitle className="text-xl font-bold text-primary-foreground flex items-center gap-2">
-              <Trophy className="h-5 w-5 text-yellow-400" /> {task.title}
+            <DialogTitle className="text-lg sm:text-xl font-bold text-primary-foreground flex items-center gap-2">
+              <Trophy className="h-4 w-4 sm:h-5 sm:w-5 text-yellow-400" /> {task.title}
             </DialogTitle>
-            <DialogDescription className="pt-2 text-muted-foreground">
+            <DialogDescription className="pt-2 text-sm sm:text-base text-muted-foreground">
               {task.description}
             </DialogDescription>
           </DialogHeader>
-          <DialogFooter className="sm:justify-between">
-            <Button variant="outline" onClick={() => setIsOpen(false)} className="hover:bg-accent hover:text-accent-foreground">
+          <DialogFooter className="sm:justify-between flex-col sm:flex-row gap-2">
+            <Button variant="outline" onClick={() => setIsOpen(false)} className="w-full sm:w-auto hover:bg-accent hover:text-accent-foreground">
               Fermer
             </Button>
             <Button 
               onClick={handleComplete} 
-              className="brawl-button bg-gradient-to-b from-green-500 to-green-700 hover:from-green-400 hover:to-green-600 gap-2"
+              className="w-full sm:w-auto brawl-button bg-gradient-to-b from-green-500 to-green-700 hover:from-green-400 hover:to-green-600 gap-2"
             >
-              <Check size={18} strokeWidth={3} /> Victoire!
+              <Check size={16} strokeWidth={3} /> Victoire!
             </Button>
           </DialogFooter>
         </DialogContent>
