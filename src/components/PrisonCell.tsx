@@ -67,10 +67,10 @@ const PrisonCell: React.FC<PrisonCellProps> = ({ category }) => {
       
       <div className="flex-1 relative bg-prison-wall overflow-hidden p-2 sm:p-4">
         {/* Prison bars at the top */}
-        <div className="prison-bars absolute top-0 left-0 right-0 h-8 sm:h-12 w-full"></div>
+        <div className="prison-bars absolute top-0 left-0 right-0 h-6 sm:h-10 w-full"></div>
         
         {/* Container for prisoners */}
-        <div className="relative h-full w-full" style={{ minHeight: isMobile ? "150px" : "200px" }}>
+        <div className="relative h-full w-full" style={{ minHeight: isMobile ? "130px" : "180px" }}>
           {/* Render tasks/prisoners */}
           {tasks.map((task) => (
             <PrisonerBall key={task.id} task={task} />

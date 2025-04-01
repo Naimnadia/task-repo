@@ -86,9 +86,9 @@ const PrisonerBall: React.FC<PrisonerBallProps> = ({ task }) => {
     }, 1000);
   };
   
-  // Size of ball based on device
-  const ballSize = isMobile ? 'w-12 h-12' : 'w-16 h-16';
-  const textSize = isMobile ? 'text-2xl' : 'text-3xl';
+  // Size of ball reduced by 30%
+  const ballSize = isMobile ? 'w-8 h-8' : 'w-11 h-11'; // Reduced from w-12/h-12 and w-16/h-16
+  const textSize = isMobile ? 'text-xl' : 'text-2xl'; // Reduced from text-2xl and text-3xl
   
   return (
     <>
