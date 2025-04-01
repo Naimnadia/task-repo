@@ -44,9 +44,9 @@ const PrisonerBall: React.FC<PrisonerBallProps> = ({ task }) => {
   
   const emotion = getEmotion(task.category);
   
-  // Random position within the cell
-  const randomX = Math.floor(Math.random() * 70) + 10; // 10-80% of the width
-  const randomY = Math.floor(Math.random() * 70) + 15; // 15-85% of the height
+  // Better positioning within the cell
+  const randomX = Math.floor(Math.random() * 50) + 25; // More centered 25-75% of the width
+  const randomY = Math.floor(Math.random() * 50) + 25; // More centered 25-75% of the height
   
   const handleComplete = () => {
     setIsEscaping(true);
@@ -78,11 +78,12 @@ const PrisonerBall: React.FC<PrisonerBallProps> = ({ task }) => {
   return (
     <>
       <div
-        className={`prison-ball bg-gradient-to-b ${getBallColor()} absolute rounded-full w-16 h-16 flex items-center justify-center text-3xl border-2 ${getBallBorder()} shadow-lg z-10`}
+        className={`prison-ball bg-gradient-to-b ${getBallColor()} absolute rounded-full w-16 h-16 flex items-center justify-center text-3xl border-2 ${getBallBorder()} shadow-lg`}
         style={{
           left: `${randomX}%`,
           top: `${randomY}%`,
-          animationName: isEscaping ? 'escape' : 'float'
+          animationName: isEscaping ? 'escape' : 'float',
+          zIndex: 20
         }}
         onClick={() => setIsOpen(true)}
       >

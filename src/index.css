@@ -74,11 +74,12 @@
 .prison-ball {
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4), inset 0 -3px 0px rgba(0, 0, 0, 0.2);
+  position: absolute !important;
 }
 
 .prison-ball:hover {
   transform: scale(1.2) rotate(5deg);
-  z-index: 10;
+  z-index: 30 !important;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5), inset 0 -3px 0px rgba(0, 0, 0, 0.2);
   cursor: pointer;
 }
@@ -156,6 +157,7 @@
 /* Apply animation to prison balls */
 .prison-ball {
   animation: float 2s ease-in-out infinite;
+  z-index: 20;
 }
 
 .prison-ball[style*="escape"] {

@@ -82,13 +82,16 @@ export const TaskProvider: React.FC<TaskProviderProps> = ({ children }) => {
   };
 
   const completeTask = (id: string) => {
+    const taskToComplete = tasks.find(task => task.id === id);
+    if (!taskToComplete) return;
+
     setTasks(tasks.map(task => 
       task.id === id ? { ...task, completed: true } : task
     ));
 
     // Remove the completed task after animation completes
     setTimeout(() => {
-      setTasks(tasks.filter(task => task.id !== id));
+      setTasks(currentTasks => currentTasks.filter(task => task.id !== id));
     }, 1200);
   };
 

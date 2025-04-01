@@ -66,14 +66,17 @@ const PrisonCell: React.FC<PrisonCellProps> = ({ category }) => {
         {/* Prison bars at the top with improved styling */}
         <div className="prison-bars absolute top-0 left-0 right-0 h-12 w-full z-0"></div>
         
-        {/* Render tasks/prisoners */}
-        {tasks.map((task) => (
-          <PrisonerBall key={task.id} task={task} />
-        ))}
+        {/* Task container with higher z-index */}
+        <div className="relative z-10 h-full w-full">
+          {/* Render tasks/prisoners */}
+          {tasks.map((task) => (
+            <PrisonerBall key={task.id} task={task} />
+          ))}
+        </div>
         
         {/* Show message when the prison is empty */}
         {tasks.length === 0 && (
-          <div className="h-full flex items-center justify-center">
+          <div className="h-full flex items-center justify-center z-10">
             <div className="text-gray-400 font-bold text-lg italic p-4 bg-black/30 rounded-lg backdrop-blur-sm border border-white/10">
               ARÈNE VIDE
             </div>
