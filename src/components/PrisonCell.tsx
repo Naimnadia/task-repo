@@ -64,9 +64,9 @@ const PrisonCell: React.FC<PrisonCellProps> = ({ category }) => {
       </div>
       <div className="flex-1 relative bg-prison-wall p-6 overflow-hidden">
         {/* Prison bars at the top with improved styling */}
-        <div className="prison-bars absolute top-0 left-0 right-0 h-12 w-full"></div>
+        <div className="prison-bars absolute top-0 left-0 right-0 h-12 w-full z-0"></div>
         
-        {/* Prisoners/Tasks */}
+        {/* Render tasks/prisoners */}
         {tasks.map((task) => (
           <PrisonerBall key={task.id} task={task} />
         ))}

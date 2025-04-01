@@ -5,8 +5,13 @@ import { useTaskContext } from '@/context/TaskContext';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/use-toast';
-import confetti from 'canvas-confetti';
 import { Trophy, Check } from 'lucide-react';
+
+// Import confetti separately
+let confetti: any;
+import('canvas-confetti').then(module => {
+  confetti = module.default;
+});
 
 interface PrisonerBallProps {
   task: Task;
@@ -43,22 +48,20 @@ const PrisonerBall: React.FC<PrisonerBallProps> = ({ task }) => {
   const randomX = Math.floor(Math.random() * 70) + 10; // 10-80% of the width
   const randomY = Math.floor(Math.random() * 70) + 15; // 15-85% of the height
   
-  // Random animation delay for the bounce
-  const randomDelay = Math.random() * 2;
-  const randomDuration = (Math.random() * 0.5) + 0.8; // 0.8-1.3s
-  
   const handleComplete = () => {
     setIsEscaping(true);
     setIsOpen(false);
     
     // Trigger confetti with more colorful options
-    confetti({
-      particleCount: 200,
-      spread: 100,
-      origin: { y: 0.6 },
-      colors: ['#F54748', '#38B000', '#FFBE0B', '#8338EC', '#5D9CEC'],
-      shapes: ['star', 'square', 'circle'],
-    });
+    if (confetti) {
+      confetti({
+        particleCount: 200,
+        spread: 100,
+        origin: { y: 0.6 },
+        colors: ['#F54748', '#38B000', '#FFBE0B', '#8338EC', '#5D9CEC'],
+        shapes: ['star', 'square', 'circle'],
+      });
+    }
     
     toast({
       title: "Victoire!",
@@ -75,12 +78,10 @@ const PrisonerBall: React.FC<PrisonerBallProps> = ({ task }) => {
   return (
     <>
       <div
-        className={`prison-ball bg-gradient-to-b ${getBallColor()} absolute rounded-full w-16 h-16 flex items-center justify-center text-3xl border-2 ${getBallBorder()} shadow-lg`}
+        className={`prison-ball bg-gradient-to-b ${getBallColor()} absolute rounded-full w-16 h-16 flex items-center justify-center text-3xl border-2 ${getBallBorder()} shadow-lg z-10`}
         style={{
           left: `${randomX}%`,
           top: `${randomY}%`,
-          animationDuration: `${randomDuration}s`,
-          animationDelay: `${randomDelay}s`,
           animationName: isEscaping ? 'escape' : 'float'
         }}
         onClick={() => setIsOpen(true)}

@@ -1,7 +1,15 @@
 
 import React, { createContext, useState, useContext, ReactNode } from 'react';
 import { Task, TaskCategory } from '@/types/Task';
-import { v4 as uuidv4 } from 'uuid';
+
+// Generate a simple UUID function since we're having issues with the uuid import
+const generateUUID = (): string => {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    const r = Math.random() * 16 | 0;
+    const v = c === 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+};
 
 interface TaskContextType {
   tasks: Task[];
@@ -28,7 +36,7 @@ interface TaskProviderProps {
 export const TaskProvider: React.FC<TaskProviderProps> = ({ children }) => {
   const [tasks, setTasks] = useState<Task[]>([
     {
-      id: uuidv4(),
+      id: generateUUID(),
       title: 'Payer les factures',
       description: 'Payer les factures d\'électricité et d\'internet avant la date limite.',
       category: 'URGENT_IMPORTANT',
@@ -36,7 +44,7 @@ export const TaskProvider: React.FC<TaskProviderProps> = ({ children }) => {
       createdAt: new Date(),
     },
     {
-      id: uuidv4(),
+      id: generateUUID(),
       title: 'Répondre aux emails',
       description: 'Répondre aux emails non urgents reçus cette semaine.',
       category: 'URGENT_NOT_IMPORTANT',
@@ -44,7 +52,7 @@ export const TaskProvider: React.FC<TaskProviderProps> = ({ children }) => {
       createdAt: new Date(),
     },
     {
-      id: uuidv4(),
+      id: generateUUID(),
       title: 'Planifier les vacances',
       description: 'Rechercher des destinations et planifier les vacances d\'été.',
       category: 'NOT_URGENT_IMPORTANT',
@@ -52,7 +60,7 @@ export const TaskProvider: React.FC<TaskProviderProps> = ({ children }) => {
       createdAt: new Date(),
     },
     {
-      id: uuidv4(),
+      id: generateUUID(),
       title: 'Regarder un film',
       description: 'Regarder le nouveau film recommandé par des amis.',
       category: 'NOT_URGENT_NOT_IMPORTANT',
@@ -63,7 +71,7 @@ export const TaskProvider: React.FC<TaskProviderProps> = ({ children }) => {
 
   const addTask = (title: string, description: string, category: TaskCategory) => {
     const newTask: Task = {
-      id: uuidv4(),
+      id: generateUUID(),
       title,
       description,
       category,

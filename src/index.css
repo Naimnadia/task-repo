@@ -133,3 +133,31 @@
   transform: translateY(2px);
   box-shadow: 0 2px 0 rgba(0, 0, 0, 0.3);
 }
+
+/* Add animation for floating balls */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes escape {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-500px) scale(0);
+  }
+}
+
+/* Apply animation to prison balls */
+.prison-ball {
+  animation: float 2s ease-in-out infinite;
+}
+
+.prison-ball[style*="escape"] {
+  animation: escape 1s forwards;
+}
