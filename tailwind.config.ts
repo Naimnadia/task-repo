@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -64,10 +63,10 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				task: {
-					urgent_important: '#FF5A5F',
-					urgent_not_important: '#45C4B0',
-					not_urgent_important: '#FFC145',
-					not_urgent_not_important: '#8D6FD1',
+					urgent_important: '#F54748',
+					urgent_not_important: '#38B000',
+					not_urgent_important: '#FFBE0B',
+					not_urgent_not_important: '#8338EC',
 				}
 			},
 			borderRadius: {
@@ -126,6 +125,31 @@ export default {
 					'50%': {
 						transform: 'translateY(-5px)'
 					}
+				},
+				'spin': {
+					'0%': { transform: 'rotate(0deg)' },
+					'100%': { transform: 'rotate(360deg)' }
+				},
+				'bounce-in': {
+					'0%': { transform: 'scale(0)', opacity: '0' },
+					'60%': { transform: 'scale(1.2)', opacity: '1' },
+					'100%': { transform: 'scale(1)', opacity: '1' }
+				},
+				'pulse-glow': {
+					'0%, 100%': { 
+						boxShadow: '0 0 10px 2px rgba(255, 255, 255, 0.7)'
+					},
+					'50%': { 
+						boxShadow: '0 0 20px 5px rgba(255, 255, 255, 0.9)'
+					}
+				},
+				'rotate-bounce': {
+					'0%': { transform: 'rotate(0deg) scale(1)' },
+					'20%': { transform: 'rotate(10deg) scale(1.1)' },
+					'40%': { transform: 'rotate(-10deg) scale(1.1)' },
+					'60%': { transform: 'rotate(10deg) scale(1.1)' },
+					'80%': { transform: 'rotate(-10deg) scale(1.1)' },
+					'100%': { transform: 'rotate(0deg) scale(1)' }
 				}
 			},
 			animation: {
@@ -134,12 +158,18 @@ export default {
 				'bounce': 'bounce 1s ease-in-out infinite',
 				'escape': 'escape 1s forwards',
 				'shake': 'shake 0.5s ease-in-out',
-				'float': 'float 2s ease-in-out infinite'
+				'float': 'float 2s ease-in-out infinite',
+				'spin': 'spin 2s linear infinite',
+				'bounce-in': 'bounce-in 0.6s ease-out',
+				'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
+				'rotate-bounce': 'rotate-bounce 1s ease-in-out'
 			},
 			backgroundImage: {
 				'prison-wall': "url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgdmlld0JveD0iMCAwIDQwIDQwIj48cmVjdCB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIGZpbGw9IiMzMzM3NDUiLz48cmVjdCB4PSI0MCIgd2lkdGg9IjMiIGhlaWdodD0iNDAiIGZpbGw9IiMyMjI2MkYiLz48cmVjdCB5PSI0MCIgd2lkdGg9IjQwIiBoZWlnaHQ9IjMiIGZpbGw9IiMyMjI2MkYiLz48L3N2Zz4=')",
 				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-				'grid-pattern': "url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAwIDEwIEwgNDAgMTAgTSAxMCAwIEwgMTAgNDAgTSAwIDIwIEwgNDAgMjAgTSAyMCAwIEwgMjAgNDAgTSAwIDMwIEwgNDAgMzAgTSAzMCAwIEwgMzAgNDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzMzMzc0NSIgb3BhY2l0eT0iMC4yIiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgZmlsbD0idXJsKCNncmlkKSIvPjwvc3ZnPg==')"
+				'grid-pattern': "url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAwIDEwIEwgNDAgMTAgTSAxMCAwIEwgMTAgNDAgTSAwIDIwIEwgNDAgMjAgTSAyMCAwIEwgMjAgNDAgTSAwIDMwIEwgNDAgMzAgTSAzMCAwIEwgMzAgNDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzMzMzc0NSIgb3BhY2l0eT0iMC4yIiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgZmlsbD0idXJsKCNncmlkKSIvPjwvc3ZnPg==')",
+				'brawl-pattern': "url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAwIDEwIEwgNDAgMTAgTSAxMCAwIEwgMTAgNDAgTSAwIDIwIEwgNDAgMjAgTSAyMCAwIEwgMjAgNDAgTSAwIDMwIEwgNDAgMzAgTSAzMCAwIEwgMzAgNDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZiIgb3BhY2l0eT0iMC4xIiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgZmlsbD0idXJsKCNncmlkKSIvPjwvc3ZnPg==')",
+				'brawl-stars-bg': "linear-gradient(135deg, #1e1a51 0%, #29235f 50%, #352c70 100%)",
 			}
 		}
 	},

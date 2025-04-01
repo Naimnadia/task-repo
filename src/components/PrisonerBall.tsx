@@ -6,6 +6,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Di
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/use-toast';
 import confetti from 'canvas-confetti';
+import { Trophy, Check } from 'lucide-react';
 
 interface PrisonerBallProps {
   task: Task;
@@ -18,11 +19,21 @@ const PrisonerBall: React.FC<PrisonerBallProps> = ({ task }) => {
   
   const getBallColor = () => {
     switch(task.category) {
-      case 'URGENT_IMPORTANT': return 'bg-task-urgent_important';
-      case 'URGENT_NOT_IMPORTANT': return 'bg-task-urgent_not_important';
-      case 'NOT_URGENT_IMPORTANT': return 'bg-task-not_urgent_important';
-      case 'NOT_URGENT_NOT_IMPORTANT': return 'bg-task-not_urgent_not_important';
-      default: return 'bg-gray-500';
+      case 'URGENT_IMPORTANT': return 'from-red-500 to-red-700';
+      case 'URGENT_NOT_IMPORTANT': return 'from-green-500 to-green-700';
+      case 'NOT_URGENT_IMPORTANT': return 'from-yellow-400 to-yellow-600';
+      case 'NOT_URGENT_NOT_IMPORTANT': return 'from-purple-500 to-purple-700';
+      default: return 'from-gray-500 to-gray-700';
+    }
+  };
+  
+  const getBallBorder = () => {
+    switch(task.category) {
+      case 'URGENT_IMPORTANT': return 'border-red-300';
+      case 'URGENT_NOT_IMPORTANT': return 'border-green-300';
+      case 'NOT_URGENT_IMPORTANT': return 'border-yellow-300';
+      case 'NOT_URGENT_NOT_IMPORTANT': return 'border-purple-300';
+      default: return 'border-gray-300';
     }
   };
   
@@ -42,16 +53,17 @@ const PrisonerBall: React.FC<PrisonerBallProps> = ({ task }) => {
     
     // Trigger confetti with more colorful options
     confetti({
-      particleCount: 150,
-      spread: 80,
+      particleCount: 200,
+      spread: 100,
       origin: { y: 0.6 },
-      colors: ['#FF5A5F', '#45C4B0', '#FFC145', '#8D6FD1', '#5D9CEC']
+      colors: ['#F54748', '#38B000', '#FFBE0B', '#8338EC', '#5D9CEC'],
+      shapes: ['star', 'square', 'circle'],
     });
     
     toast({
-      title: "Tâche accomplie!",
-      description: "Un prisonnier s'est échappé!",
-      className: "bg-gradient-to-r from-green-500 to-emerald-500 text-white border-none",
+      title: "Victoire!",
+      description: "Tâche accomplie avec succès!",
+      className: "bg-gradient-to-r from-green-500 to-emerald-500 text-white border-none font-bold",
     });
     
     // Give time for the animation to play
@@ -63,7 +75,7 @@ const PrisonerBall: React.FC<PrisonerBallProps> = ({ task }) => {
   return (
     <>
       <div
-        className={`prison-ball ${getBallColor()} absolute rounded-full w-14 h-14 flex items-center justify-center text-2xl cursor-pointer shadow-lg`}
+        className={`prison-ball bg-gradient-to-b ${getBallColor()} absolute rounded-full w-16 h-16 flex items-center justify-center text-3xl border-2 ${getBallBorder()} shadow-lg`}
         style={{
           left: `${randomX}%`,
           top: `${randomY}%`,
@@ -77,9 +89,11 @@ const PrisonerBall: React.FC<PrisonerBallProps> = ({ task }) => {
       </div>
       
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className="bg-secondary/90 backdrop-blur-md border-border">
+        <DialogContent className="bg-card/95 backdrop-blur-md border-2 border-white/20 shadow-xl rounded-xl">
           <DialogHeader>
-            <DialogTitle className="text-xl font-bold text-primary-foreground">{task.title}</DialogTitle>
+            <DialogTitle className="text-xl font-bold text-primary-foreground flex items-center gap-2">
+              <Trophy className="h-5 w-5 text-yellow-400" /> {task.title}
+            </DialogTitle>
             <DialogDescription className="pt-2 text-muted-foreground">
               {task.description}
             </DialogDescription>
@@ -88,8 +102,11 @@ const PrisonerBall: React.FC<PrisonerBallProps> = ({ task }) => {
             <Button variant="outline" onClick={() => setIsOpen(false)} className="hover:bg-accent hover:text-accent-foreground">
               Fermer
             </Button>
-            <Button onClick={handleComplete} className="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600">
-              Marquer comme accompli
+            <Button 
+              onClick={handleComplete} 
+              className="brawl-button bg-gradient-to-b from-green-500 to-green-700 hover:from-green-400 hover:to-green-600 gap-2"
+            >
+              <Check size={18} strokeWidth={3} /> Victoire!
             </Button>
           </DialogFooter>
         </DialogContent>
