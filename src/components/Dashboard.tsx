@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import PrisonCell from './PrisonCell';
 import AddTaskForm from './AddTaskForm';
 import { Button } from '@/components/ui/button';
-import { Plus, Trophy, Star } from 'lucide-react';
+import { Plus, Trophy, Battery } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 const Dashboard: React.FC = () => {
@@ -16,10 +16,10 @@ const Dashboard: React.FC = () => {
         <div className="flex flex-col sm:flex-row justify-between items-center mb-4 sm:mb-8 p-3 sm:p-4 bg-accent/60 backdrop-blur-md rounded-xl border-2 border-white/20 shadow-lg">
           <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-0">
             <div className="bg-yellow-500 p-1.5 sm:p-2 rounded-lg animate-pulse-glow">
-              <Trophy size={isMobile ? 20 : 28} className="text-yellow-900" />
+              <Battery size={isMobile ? 20 : 28} className="text-yellow-900" />
             </div>
             <h1 className="text-2xl sm:text-4xl font-black bg-gradient-to-r from-yellow-300 via-yellow-100 to-yellow-400 bg-clip-text text-transparent brawl-text-shadow">
-              TASK BRAWL
+              TASK BATTERY
             </h1>
             <div className="hidden sm:flex -space-x-2">
               <div className="w-6 h-6 rounded-full bg-task-urgent_important border-2 border-white/80"></div>
@@ -36,7 +36,7 @@ const Dashboard: React.FC = () => {
           </Button>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-8 h-[calc(100vh-160px)] md:h-[calc(100vh-180px)] overflow-y-auto md:overflow-hidden">
+        <div className="grid grid-cols-1 gap-3 sm:gap-8 h-auto">
           <PrisonCell category="URGENT_IMPORTANT" />
           <PrisonCell category="URGENT_NOT_IMPORTANT" />
           <PrisonCell category="NOT_URGENT_IMPORTANT" />

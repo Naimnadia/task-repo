@@ -5,7 +5,7 @@ import { useTaskContext } from '@/context/TaskContext';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/use-toast';
-import { Trophy, Check } from 'lucide-react';
+import { Trophy, Check, Trash2 } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 // Import confetti separately
@@ -21,7 +21,7 @@ interface PrisonerBallProps {
 const PrisonerBall: React.FC<PrisonerBallProps> = ({ task }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isEscaping, setIsEscaping] = useState(false);
-  const { completeTask } = useTaskContext();
+  const { completeTask, deleteTask } = useTaskContext();
   const isMobile = useIsMobile();
   
   const getBallColor = () => {
@@ -45,19 +45,6 @@ const PrisonerBall: React.FC<PrisonerBallProps> = ({ task }) => {
   };
   
   const emotion = getEmotion(task.category);
-  
-  // Create unique positioning for each prisoner
-  const hash = task.id.split('-')[0] || '';
-  const hashSum = [...hash].reduce((sum, char) => sum + char.charCodeAt(0), 0);
-  
-  // Adjust positioning ranges based on mobile or desktop
-  const randomX = isMobile 
-    ? 10 + (hashSum % 80) // Between 10% and 90% on mobile (wider range)
-    : 20 + (hashSum % 60); // Between 20% and 80% on desktop
-  
-  const randomY = isMobile
-    ? 15 + ((hashSum * 7) % 70) // Between 15% and 85% on mobile (wider vertical range)
-    : 20 + ((hashSum * 7) % 60); // Between 20% and 80% on desktop
   
   const handleComplete = () => {
     setIsEscaping(true);
@@ -86,6 +73,21 @@ const PrisonerBall: React.FC<PrisonerBallProps> = ({ task }) => {
     }, 1000);
   };
   
+  const handleDelete = () => {
+    setIsOpen(false);
+    
+    toast({
+      title: "Tâche supprimée",
+      description: "La tâche a été retirée de la liste",
+      className: "bg-gradient-to-r from-red-500 to-rose-500 text-white border-none font-bold",
+    });
+    
+    // Give time for the dialog to close
+    setTimeout(() => {
+      deleteTask(task.id);
+    }, 300);
+  };
+  
   // Size of ball reduced by 30%
   const ballSize = isMobile ? 'w-8 h-8' : 'w-11 h-11'; // Reduced from w-12/h-12 and w-16/h-16
   const textSize = isMobile ? 'text-xl' : 'text-2xl'; // Reduced from text-2xl and text-3xl
@@ -95,12 +97,8 @@ const PrisonerBall: React.FC<PrisonerBallProps> = ({ task }) => {
       <div
         className={`prison-ball bg-gradient-to-b ${getBallColor()} rounded-full ${ballSize} flex items-center justify-center ${textSize} border-2 ${getBallBorder()} shadow-lg cursor-pointer`}
         style={{
-          position: 'absolute',
-          left: `${randomX}%`,
-          top: `${randomY}%`,
-          zIndex: 50,
           animationName: isEscaping ? 'escape' : 'float',
-          animationDuration: `${2 + (hashSum % 2)}s`
+          animationDuration: '2s'
         }}
         onClick={() => setIsOpen(true)}
       >
@@ -118,8 +116,12 @@ const PrisonerBall: React.FC<PrisonerBallProps> = ({ task }) => {
             </DialogDescription>
           </DialogHeader>
           <DialogFooter className="sm:justify-between flex-col sm:flex-row gap-2">
-            <Button variant="outline" onClick={() => setIsOpen(false)} className="w-full sm:w-auto hover:bg-accent hover:text-accent-foreground">
-              Fermer
+            <Button 
+              variant="outline" 
+              onClick={handleDelete} 
+              className="w-full sm:w-auto hover:bg-red-500/20 border-red-500/30 text-red-500 hover:text-red-400 flex items-center gap-2"
+            >
+              <Trash2 size={16} /> Supprimer
             </Button>
             <Button 
               onClick={handleComplete} 
